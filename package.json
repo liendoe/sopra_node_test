@@ -4,7 +4,7 @@
   "description": "API TEST FOR SOPRA",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --forceExit --watchAll --maxWorkers=1",
+    "test": "jest --detectOpenHandles --forceExit --watchAll ",
     "dev": "nodemon ./app.js"
   },
   "repository": {
@@ -14,15 +14,16 @@
   "author": "Eduardo Liendo",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "got": "^11.3.0"
   },
   "devDependencies": {
     "jest": "^26.1.0",
     "supertest": "^4.0.2"
   },
-  "jest":{
+  "jest": {
     "testEnvironment": "node",
-    "coveragePathIgnorePatterns":[
+    "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
   }
