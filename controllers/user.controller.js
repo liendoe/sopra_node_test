@@ -1,12 +1,32 @@
 const UserService = require('../services/user.service');
 
-const getById = async (req, res) => {
+module.exports.getById = async (req, res) => {
     try {
-        const user = await UserService.get();
+        const [error, user] = await UserService.getById(req.params.id);
+        if (error){
+            return res.status(500).json({error: "Error getting user by id"});
+        }
         return res.json(user);
     } catch (error) {
-        return res.status(500).json({error: "Error getting root route"});
+        return res.status(500).json({error: "Error getting user by id"});
     }
-}
+};
 
-module.exports.getById = getById;
+module.exports.getFiltered = async (req, res) => {
+    try {
+        let user, error;
+        if (req.query.hasOwnProperty('id')) {
+            [error, user] = await UserService.getById(req.query.id);
+        } else if(req.query.hasOwnProperty('name')) {
+            [error, user] = await UserService.getByName(req.query.name);
+        } else {
+            [error, user] = await UserService.getAll();
+        }
+        if (error){
+            return res.status(500).json({error: "Error getting user by id"});
+        }
+        return res.json(user);
+    } catch (error) {
+        return res.status(500).json({error: "Error getting user by id"});
+    }
+};

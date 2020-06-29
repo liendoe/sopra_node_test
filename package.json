@@ -4,8 +4,8 @@
   "description": "API TEST FOR SOPRA",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --forceExit --watchAll ",
-    "dev": "nodemon ./app.js"
+    "test": "jest --detectOpenHandles --forceExit --watchAll --unhandled-rejections=strict",
+    "dev": "nodemon ./start.js"
   },
   "repository": {
     "type": "git",
