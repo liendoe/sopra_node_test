@@ -9,5 +9,6 @@ router.get('/', RootController.get);
 router.get('/users', UserController.getFiltered);
 router.get('/users/:id', UserController.getById);
 router.get('/policies', PoliciesController.getFiltered);
+router.get('/policies/:id/user', PoliciesController.getUser);
 
 module.exports = router;

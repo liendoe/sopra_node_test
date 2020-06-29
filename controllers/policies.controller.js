@@ -12,7 +12,7 @@ module.exports.getFiltered = async (req, res) => {
         }
 
         [error, policies] = await PoliciesService.getByClientId(user.id);
-        
+
         if (error){
             return res.status(500).json({error: "Error getting policies"});
         }
@@ -22,3 +22,17 @@ module.exports.getFiltered = async (req, res) => {
         return res.status(500).json({error: "Error getting policies"});
     }
 };
+
+module.exports.getUser = async(req, res) => {
+    try {
+        let user, policy, error;
+
+        [error, policy] = await PoliciesService.getById(req.params.id);
+
+        [error, user] = await UserService.getById(policy.clientId);
+
+        return res.json(user);
+    } catch (error) {
+        return res.status(500).json({error: "Error getting policies"});
+    }
+}
