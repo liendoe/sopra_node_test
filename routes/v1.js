@@ -6,11 +6,14 @@ const AuthController = require('../controllers/auth.controller');
 const UserController = require('../controllers/user.controller');
 const PoliciesController = require('../controllers/policies.controller');
 
+const { authorize } = require('../middleware/authorize');
+const { permit } = require('../middleware/permit');
+
 router.get('/', RootController.get);
 router.post('/authenticate', AuthController.authenticate);
-router.get('/users', UserController.getFiltered);
-router.get('/users/:id', UserController.getById);
-router.get('/policies', PoliciesController.getFiltered);
-router.get('/policies/:id/user', PoliciesController.getUser);
+router.get('/users', authorize, permit('admin','user'), UserController.getFiltered);
+router.get('/users/:id', authorize, permit('admin','user'), UserController.getById);
+router.get('/policies',  authorize, permit('admin','user'), PoliciesController.getFiltered);
+router.get('/policies/:id/user', authorize, permit('admin','user'), PoliciesController.getUser);
 
 module.exports = router;
