@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const RootController = require('../controllers/root.controller');
+const AuthController = require('../controllers/auth.controller');
 const UserController = require('../controllers/user.controller');
 const PoliciesController = require('../controllers/policies.controller');
 
 router.get('/', RootController.get);
+router.post('/authenticate', AuthController.authenticate);
 router.get('/users', UserController.getFiltered);
 router.get('/users/:id', UserController.getById);
 router.get('/policies', PoliciesController.getFiltered);

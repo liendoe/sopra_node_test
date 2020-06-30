@@ -1,8 +1,8 @@
 const UserService = require('./user.service');
 const jwt = require('jsonwebtoken');
 
-const jwtKey = "my_secret_key"
-const jwtExpirySeconds = 300
+const jwtKey = "my_secret_key";
+const jwtExpirySeconds = 300;
  
 module.exports.validate = async (email, role) => {
     try {

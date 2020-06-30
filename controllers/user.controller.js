@@ -4,7 +4,7 @@ module.exports.getById = async (req, res) => {
     try {
         const [error, user] = await UserService.getById(req.params.id);
         if (error){
-            return res.status(500).json({error: "Error getting user by id"});
+            throw new Error();
         }
         return res.json(user);
     } catch (error) {
@@ -23,10 +23,10 @@ module.exports.getFiltered = async (req, res) => {
             [error, user] = await UserService.getAll();
         }
         if (error){
-            return res.status(500).json({error: "Error getting user by id"});
+            return res.status(500).json({error: "Error getting user by filter"});
         }
         return res.json(user);
     } catch (error) {
-        return res.status(500).json({error: "Error getting user by id"});
+        return res.status(500).json({error: "Error getting user by filter"});
     }
 };
