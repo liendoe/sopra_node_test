@@ -13,7 +13,7 @@ router.get('/', RootController.get);
 router.post('/authenticate', AuthController.authenticate);
 router.get('/users', authorize, permit('admin','user'), UserController.getFiltered);
 router.get('/users/:id', authorize, permit('admin','user'), UserController.getById);
-router.get('/policies',  authorize, permit('admin','user'), PoliciesController.getFiltered);
-router.get('/policies/:id/user', authorize, permit('admin','user'), PoliciesController.getUser);
+router.get('/policies',  authorize, permit('admin'), PoliciesController.getFiltered);
+router.get('/policies/:id/user', authorize, permit('admin'), PoliciesController.getUser);
 
 module.exports = router;

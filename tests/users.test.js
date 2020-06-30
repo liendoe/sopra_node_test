@@ -1,10 +1,17 @@
 const request = require('supertest');
+const jwt = require('jsonwebtoken');
 const app = require('../app');
 
 describe('Get Users', () => {const AuthService = require('../services/auth.service');
   it('should get user data filtered by user id', async done => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwZWNlNWRiLWNkMTQtNGYyMS04MTJmLTk2NjYzM2U3YmU4NiIsIm5hbWUiOiJCcml0bmV5IiwiZW1haWwiOiJicml0bmV5YmxhbmtlbnNoaXBAcXVvdGV6YXJ0LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU5MzU0NTQwMn0.Ib9fIHaQ8v4m55E8YfEO2JODHKjWwfXUsSmrhf8hzg8';
-  
+    let admin = {
+      id:"a0ece5db-cd14-4f21-812f-966633e7be86",
+      name:"Britney",
+      email:"britneyblankenship@quotezart.com",
+      role:"admin"
+    };
+    const token = generateToken(admin);
+
     const res = await request(app)
       .get('/v1/users/a0ece5db-cd14-4f21-812f-966633e7be86')
       .set({ 'x-api-token': token});
@@ -22,8 +29,14 @@ describe('Get Users', () => {const AuthService = require('../services/auth.servi
   });
 
   it('should get user data filtered by user name', async done => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwZWNlNWRiLWNkMTQtNGYyMS04MTJmLTk2NjYzM2U3YmU4NiIsIm5hbWUiOiJCcml0bmV5IiwiZW1haWwiOiJicml0bmV5YmxhbmtlbnNoaXBAcXVvdGV6YXJ0LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU5MzU0NTQwMn0.Ib9fIHaQ8v4m55E8YfEO2JODHKjWwfXUsSmrhf8hzg8';
-  
+    let admin = {
+      id:"a0ece5db-cd14-4f21-812f-966633e7be86",
+      name:"Britney",
+      email:"britneyblankenship@quotezart.com",
+      role:"admin"
+    };
+    const token = generateToken(admin);
+
     const res = await request(app)
       .get('/v1/users?name=Manning')
       .set({ 'x-api-token': token});
@@ -41,8 +54,14 @@ describe('Get Users', () => {const AuthService = require('../services/auth.servi
   });
 
   it('should get all users data', async done => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwZWNlNWRiLWNkMTQtNGYyMS04MTJmLTk2NjYzM2U3YmU4NiIsIm5hbWUiOiJCcml0bmV5IiwiZW1haWwiOiJicml0bmV5YmxhbmtlbnNoaXBAcXVvdGV6YXJ0LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU5MzU0NTQwMn0.Ib9fIHaQ8v4m55E8YfEO2JODHKjWwfXUsSmrhf8hzg8';
-  
+    let admin = {
+      id:"a0ece5db-cd14-4f21-812f-966633e7be86",
+      name:"Britney",
+      email:"britneyblankenship@quotezart.com",
+      role:"admin"
+    };
+    const token = generateToken(admin);
+
     const res = await request(app)
       .get('/v1/users/')
       .set({ 'x-api-token': token});
@@ -53,9 +72,15 @@ describe('Get Users', () => {const AuthService = require('../services/auth.servi
     
   });
 
-  it('should throws unauthorizer error', async done => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwZWNlNWRiLWNkMTQtNGYyMS04MTJmLTk2NjYzM2U3YmU4NiIsIm5hbWUiOiJCcml0bmV5IiwiZW1haWwiOiJicml0bmV5YmxhbmtlbnNoaXBAcXVvdGV6YXJ0LmNvbSIsInJvbGUiOiJVbmF1dGhvcml6ZWQiLCJpYXQiOjE1OTM1NDYxNjd9.Kpklo4pBUYQtj4feOO0TMwUGZ398abm5s_NpznTv2o0';
-  
+  it('should throws unauthorizer 403 error', async done => {
+    let unauthorized = {
+      id:"44e44268-dce8-4902-b662-1b34d2c10b8e",
+      name:"Merrill",
+      email:"merrillblankenship@quotezart.com",
+      role:"Unauthorized"
+    };
+    const token = generateToken(unauthorized);
+
     const res = await request(app)
       .get('/v1/users/')
       .set({ 'x-api-token': token});
@@ -67,3 +92,11 @@ describe('Get Users', () => {const AuthService = require('../services/auth.servi
     
   });
 });
+
+function generateToken(user){
+  const secret = 'my_secret_key';
+  const token = jwt.sign( user, secret, {
+      algorithm: "HS256"
+  });
+  return token;
+}
