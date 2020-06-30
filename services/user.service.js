@@ -1,5 +1,4 @@
 const requestService = require('./request.service');
-
 const CLIENTS_URL = 'http://www.mocky.io/v2/5808862710000087232b75ac';
 
 const getAll = async () => {
@@ -26,6 +25,20 @@ module.exports.getByName = async(name) => {
     try {
         const [error, clients] = await getAll();
         found = clients.find(client => client.name === name);
+        return [undefined, found];
+    } catch (error) {
+        return [error, undefined];
+    }
+}
+
+module.exports.findByEmailAndRole = async(email, role) => {
+    try {
+        const [error, clients] = await getAll();
+        const found = clients.find((client) => (client.email === email && client.role === role));
+        
+        if(!found){
+            throw new Error('Not Found');
+        }
         return [undefined, found];
     } catch (error) {
         return [error, undefined];
