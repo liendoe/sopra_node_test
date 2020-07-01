@@ -1,6 +1,7 @@
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
 const app = require('../app');
+const config = require('../config');
 
 describe('Get Users', () => {const AuthService = require('../services/auth.service');
   it('should get user data filtered by user id', async done => {
@@ -14,7 +15,7 @@ describe('Get Users', () => {const AuthService = require('../services/auth.servi
 
     const res = await request(app)
       .get('/v1/users/a0ece5db-cd14-4f21-812f-966633e7be86')
-      .set({ 'x-api-token': token});
+      .set({ 'Authorization': 'Bearer ' + token});
 
     expect(res.statusCode).toEqual(200);
     
@@ -39,7 +40,7 @@ describe('Get Users', () => {const AuthService = require('../services/auth.servi
 
     const res = await request(app)
       .get('/v1/users?name=Manning')
-      .set({ 'x-api-token': token});
+      .set({ 'Authorization': 'Bearer ' + token});
 
     expect(res.statusCode).toEqual(200);
     
@@ -64,7 +65,7 @@ describe('Get Users', () => {const AuthService = require('../services/auth.servi
 
     const res = await request(app)
       .get('/v1/users/')
-      .set({ 'x-api-token': token});
+      .set({ 'Authorization': 'Bearer ' + token});
 
     expect(res.statusCode).toEqual(200);
     expect(Array.isArray(res.body)).toEqual(true);
@@ -83,7 +84,7 @@ describe('Get Users', () => {const AuthService = require('../services/auth.servi
 
     const res = await request(app)
       .get('/v1/users/')
-      .set({ 'x-api-token': token});
+      .set({ 'Authorization': 'Bearer ' + token});
 
     expect(res.statusCode).toEqual(403);
     expect(res.body).toHaveProperty('message');
@@ -94,7 +95,7 @@ describe('Get Users', () => {const AuthService = require('../services/auth.servi
 });
 
 function generateToken(user){
-  const secret = 'my_secret_key';
+  const secret = config.jwt.key;
   const token = jwt.sign( user, secret, {
       algorithm: "HS256"
   });

@@ -1,5 +1,7 @@
 const requestService = require('./request.service');
-const CLIENTS_URL = 'http://www.mocky.io/v2/5808862710000087232b75ac';
+const config = require('../config');
+
+const CLIENTS_URL = config.endpoints.clients;
 
 const getAll = async () => {
     try {
@@ -24,7 +26,7 @@ module.exports.getById = async (id) => {
 module.exports.getByName = async(name) => {
     try {
         const [error, clients] = await getAll();
-        found = clients.find(client => client.name === name);
+        found = clients.find(client => client.name.toLowerCase() === name.toLowerCase());
         return [undefined, found];
     } catch (error) {
         return [error, undefined];
@@ -34,7 +36,7 @@ module.exports.getByName = async(name) => {
 module.exports.findByEmailAndRole = async(email, role) => {
     try {
         const [error, clients] = await getAll();
-        const found = clients.find((client) => (client.email === email && client.role === role));
+        const found = clients.find((client) => isValidEmailAndRole(email, role, client));
         
         if(!found){
             throw new Error('Not Found');
@@ -43,4 +45,8 @@ module.exports.findByEmailAndRole = async(email, role) => {
     } catch (error) {
         return [error, undefined];
     }
+}
+
+function isValidEmailAndRole(email, role, client){
+    return (client.email.toLowerCase() === email.toLowerCase() && client.role.toLowerCase() === role.toLowerCase());
 }

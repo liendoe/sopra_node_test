@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
+const config = require('../config');
 
-const jwtKey = "my_secret_key";
-const jwtExpirySeconds = 300;
+const jwtKey = config.jwt.key;
+const jwtExpirySeconds = config.jwt.expiry_seconds;
  
 module.exports.singToken = (user) => {
     const token = jwt.sign( user, jwtKey, {

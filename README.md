@@ -36,7 +36,7 @@ npm test
 Any user could be authenticated with his email and role. 
 
 ### Authorization required
-Header `x-api-token` with JWT required
+Header `Authorization: Bearer ${token}` with JWT required
 - Get all users: `GET localhost:3001/v1/users`
 - Get user data filtered by user name: `GET localhost:3001/v1/users?name={username}`
 - Get user data filtered by user id: `GET localhost:3001/v1/users?id={userid}`

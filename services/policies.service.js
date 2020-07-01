@@ -1,6 +1,7 @@
 const requestService = require('./request.service');
+const config = require('../config');
 
-const POLICIES_URL = 'http://www.mocky.io/v2/580891a4100000e8242b75c5';
+const POLICIES_URL = config.endpoints.policies;
 
 module.exports.getByClientId = async (clientId) => {
     try {

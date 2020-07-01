@@ -1,5 +1,4 @@
 const AuthService = require('../services/auth.service');
-const jwt = require('jsonwebtoken');
 
 describe('Auth Service', () => {
    
@@ -15,7 +14,7 @@ describe('Auth Service', () => {
     const {token, maxAgeInMiliseconds} = AuthService.singToken(user);
     expect(typeof token).toEqual('string');
     expect(typeof maxAgeInMiliseconds).toEqual('number');
-    expect(maxAgeInMiliseconds).toEqual(300*1000);
+    expect(maxAgeInMiliseconds).toEqual(1800*1000);
     
   });
 

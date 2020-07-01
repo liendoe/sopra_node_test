@@ -1,6 +1,7 @@
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
 const app = require('../app');
+const config = require('../config');
 
 describe('Get Policies', () => {
    
@@ -15,7 +16,7 @@ describe('Get Policies', () => {
 
     const res = await request(app)
       .get('/v1/policies?name=Britney')
-      .set({ 'x-api-token': token});
+      .set({ 'Authorization': 'Bearer ' + token});
 
     expect(res.statusCode).toEqual(200);
     expect(Array.isArray(res.body)).toEqual(true);
@@ -40,7 +41,7 @@ describe('Get Policies', () => {
     const token = generateToken(admin);
     const res = await request(app)
       .get('/v1/policies/7b624ed3-00d5-4c1b-9ab8-c265067ef58b/user')
-      .set({ 'x-api-token': token});
+      .set({ 'Authorization': 'Bearer ' + token});
 
     expect(res.statusCode).toEqual(200);
     
@@ -63,7 +64,7 @@ describe('Get Policies', () => {
     const token = generateToken(user);
     const res = await request(app)
       .get('/v1/policies/7b624ed3-00d5-4c1b-9ab8-c265067ef58b/user')
-      .set({ 'x-api-token': token});
+      .set({ 'Authorization': 'Bearer ' + token});
 
     expect(res.statusCode).toEqual(403);
     
@@ -77,7 +78,7 @@ describe('Get Policies', () => {
 });
 
 function generateToken(user){
-  const secret = 'my_secret_key';
+  const secret = config.jwt.key;
   const token = jwt.sign( user, secret, {
       algorithm: "HS256"
   });

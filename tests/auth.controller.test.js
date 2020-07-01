@@ -19,17 +19,4 @@ describe('POST authenticate', () => {
     
   });
 
-//   it(`should submit invalid user email, role and 401`, async done => {
-//     const email = 'invalid@user.com';
-//     const role = 'invalid_role';
-//     const res = await request(app)
-//         .post('/v1/authenticate')
-//         .set('Content-Type', 'application/json')
-//         .send({"email":email, "role":role})
-//         .expect(401);
-
-//     done();
-    
-//   });
-
 });
