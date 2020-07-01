@@ -6,6 +6,9 @@ module.exports.getById = async (req, res) => {
         if (error){
             throw new Error();
         }
+        if(!user){
+            res.status(404).json({message:"User not found"});
+        }
         return res.json(user);
     } catch (error) {
         return res.status(500).json({error: "Error getting user by id"});
@@ -24,6 +27,9 @@ module.exports.getFiltered = async (req, res) => {
         }
         if (error){
             return res.status(500).json({error: "Error getting user by filter"});
+        }
+        if(!user){
+            res.status(404).json({message:"Users not found"});
         }
         return res.json(user);
     } catch (error) {
