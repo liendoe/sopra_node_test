@@ -35,6 +35,20 @@ curl -X POST "localhost:3001/v1/authenticate" -d -H "Content-Type: application/j
 # Response Token Example:
 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwZWNlNWRiLWNkMTQtNGYyMS04MTJmLTk2NjYzM2U3YmU4NiIsIm5hbWUiOiJCcml0bmV5IiwiZW1haWwiOiJicml0bmV5YmxhbmtlbnNoaXBAcXVvdGV6YXJ0LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU5Mzc3NjYyNSwiZXhwIjoxNTkzNzc4NDI1fQ.Iya9KpyX9nY_L6Mv46GyX2fOYFMg5rQ2aS5PskIWauU"
 ```
+```javascript
+fetch('http://localhost:3001/v1/authenticate', {
+  method: 'POST',
+  body: JSON.stringify({
+    email: 'britneyblankenship@quotezart.com',
+    role: 'admin'
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8'
+  }
+})
+.then(res => res.json())
+.then(console.log)
+```
 
 ### Authorization required
 Header `Authorization: Bearer ${token}` with JWT required
